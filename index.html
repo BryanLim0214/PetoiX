@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetoiX — Voice-Controlled Robotics Interface</title>
+    <meta name="description" content="PetoiX: a voice-controlled robotics interface for middle school AI learning with the Petoi Bittle X robot dog">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%BE%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <span class="logo-icon">🐾</span>
+                <span class="logo-text">PetoiX</span>
+                <span class="logo-badge">AI</span>
+            </div>
+        </div>
+        <div class="header-center">
+            <div class="workspace-hint">
+                Voice, camera, and manual control in one workspace.
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="status-indicators">
+                <div class="status-dot" id="status-bt">
+                    <span class="dot"></span>
+                    <span class="status-label" id="status-bt-label">Connecting...</span>
+                </div>
+            </div>
+            <button class="emergency-btn" id="btn-emergency" title="Emergency Stop (Esc)">
+                <span>⛔</span> STOP
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="workspace-shell">
+            <section class="workspace-main">
+                <div class="workspace-intro">
+                    <div>
+                        <p class="eyebrow">Explainable AI Literacy</p>
+                        <h1>See how prompts become robot actions.</h1>
+                    </div>
+                    <p class="workspace-copy">
+                        Students can type or speak a command, view the interpreted plan, and watch the robot respond.
+                    </p>
+                </div>
+
+                <div class="workspace-steps workspace-card">
+                    <div class="step-card">
+                        <span class="step-number">1</span>
+                        <div>
+                            <p class="step-title">Give a prompt</p>
+                            <p class="step-copy">Use voice or text to ask the robot to do something simple or chained.</p>
+                        </div>
+                    </div>
+                    <div class="step-card">
+                        <span class="step-number">2</span>
+                        <div>
+                            <p class="step-title">See the plan</p>
+                            <p class="step-copy">The system shows how it interpreted the request before or during execution.</p>
+                        </div>
+                    </div>
+                    <div class="step-card">
+                        <span class="step-number">3</span>
+                        <div>
+                            <p class="step-title">Observe the result</p>
+                            <p class="step-copy">Students compare the prompt, the chosen plan, and the robot’s behavior.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demo-prompts workspace-card">
+                    <div class="section-heading">
+                        <h3>Demo Prompts</h3>
+                        <p>Use these to show clear, indirect, chained, and unsupported prompts.</p>
+                    </div>
+                    <div class="demo-grid">
+                        <button class="demo-prompt-btn" data-demo-prompt="wave hello">
+                            <span>Clear Prompt</span>
+                            <strong>wave hello</strong>
+                        </button>
+                        <button class="demo-prompt-btn" data-demo-prompt="I aced my test!">
+                            <span>Indirect Prompt</span>
+                            <strong>I aced my test!</strong>
+                        </button>
+                        <button class="demo-prompt-btn" data-demo-prompt="walk forward then wave">
+                            <span>Chained Prompt</span>
+                            <strong>walk forward then wave</strong>
+                        </button>
+                        <button class="demo-prompt-btn" data-demo-prompt="what is my name?">
+                            <span>Needs Revision</span>
+                            <strong>what is my name?</strong>
+                        </button>
+                    </div>
+                    <button class="demo-reset-btn" id="btn-reset-demo">Reset demo screen</button>
+                </div>
+
+                <div class="composer-card">
+                    <div class="composer-header">
+                        <div>
+                            <p class="composer-title">1. Student Input</p>
+                            <p class="composer-subtitle">Type or speak a request in everyday language.</p>
+                        </div>
+                        <div class="mic-inline">
+                            <div class="mic-container" id="mic-container">
+                                <div class="mic-rings">
+                                    <div class="mic-ring ring-1"></div>
+                                    <div class="mic-ring ring-2"></div>
+                                    <div class="mic-ring ring-3"></div>
+                                </div>
+                                <button class="mic-btn" id="btn-mic" title="Start voice input">
+                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                        <line x1="12" y1="19" x2="12" y2="23"/>
+                                        <line x1="8" y1="23" x2="16" y2="23"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="mic-inline-copy">
+                                <p class="mic-status" id="mic-status">Click to start listening</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="manual-input-row">
+                        <input type="text" class="manual-input" id="manual-input" placeholder="Try: walk forward and wave" autocomplete="off">
+                        <button class="send-btn" id="btn-send-manual">Send</button>
+                    </div>
+                    <div class="live-transcript" id="live-transcript"></div>
+                </div>
+
+                <div class="quick-commands workspace-card">
+                    <div class="section-heading">
+                        <h3>Try Example Skills</h3>
+                        <p>Use these as starter prompts or compare them with student-created commands.</p>
+                    </div>
+                    <div class="cmd-grid">
+                        <button class="cmd-btn" data-cmd="stand">🧍 Stand</button>
+                        <button class="cmd-btn" data-cmd="sit">🪑 Sit</button>
+                        <button class="cmd-btn" data-cmd="rest">😴 Rest</button>
+                        <button class="cmd-btn" data-cmd="walk forward">🚶 Walk</button>
+                        <button class="cmd-btn" data-cmd="trot forward">🏃 Trot</button>
+                        <button class="cmd-btn" data-cmd="crawl forward">🐛 Crawl</button>
+                        <button class="cmd-btn" data-cmd="walk backward">⬅️ Backward</button>
+                        <button class="cmd-btn" data-cmd="walk left">↩️ Left</button>
+                        <button class="cmd-btn" data-cmd="walk right">↪️ Right</button>
+                        <button class="cmd-btn" data-cmd="wave hello">👋 Wave</button>
+                        <button class="cmd-btn" data-cmd="do the 67 meme">6-7 Routine</button>
+                        <button class="cmd-btn" data-cmd="do a push up">💪 Push-up</button>
+                        <button class="cmd-btn" data-cmd="play dead">💀 Play Dead</button>
+                        <button class="cmd-btn" data-cmd="celebrate">🎉 Celebrate</button>
+                        <button class="cmd-btn" data-cmd="rotate">🔄 Rotate</button>
+                        <button class="cmd-btn" data-cmd="stretch">🙆 Stretch</button>
+                        <button class="cmd-btn" data-cmd="stop">⛔ Stop</button>
+                    </div>
+                </div>
+
+                <div class="robot-response workspace-card" id="robot-response">
+                    <div class="robot-avatar">
+                        <span class="robot-emoji" id="robot-emoji">🐕</span>
+                    </div>
+                    <div class="response-shell">
+                        <div class="section-heading response-heading">
+                            <h3>2. Interpreted Plan and Result</h3>
+                            <p>The interface explains what the system selected and why.</p>
+                        </div>
+                        <div class="response-bubble" id="response-bubble">
+                            <p>Ready. The next command will appear here with the selected plan and robot response.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="manual-card workspace-card" id="manual-mode">
+                    <div class="section-heading">
+                        <h3>4. Manual Mode</h3>
+                        <p>Send a built-in firmware skill directly, without the language model, and read the joint angles.</p>
+                    </div>
+                    <div class="manual-grid">
+                        <button class="manual-btn" data-direct="kbalance">Stand<code>kbalance</code></button>
+                        <button class="manual-btn" data-direct="ksit">Sit<code>ksit</code></button>
+                        <button class="manual-btn" data-direct="krest">Rest<code>krest</code></button>
+                        <button class="manual-btn" data-direct="kstr">Stretch<code>kstr</code></button>
+                        <button class="manual-btn" data-direct="kbuttUp">Butt Up<code>kbuttUp</code></button>
+                        <button class="manual-btn" data-direct="kwkF">Walk<code>kwkF</code></button>
+                        <button class="manual-btn" data-direct="ktrF">Trot<code>ktrF</code></button>
+                        <button class="manual-btn" data-direct="kcrF">Crawl<code>kcrF</code></button>
+                        <button class="manual-btn" data-direct="kbk">Back<code>kbk</code></button>
+                        <button class="manual-btn" data-direct="kwkL">Left<code>kwkL</code></button>
+                        <button class="manual-btn" data-direct="kwkR">Right<code>kwkR</code></button>
+                        <button class="manual-btn" data-direct="khi">Wave<code>khi</code></button>
+                        <button class="manual-btn" data-direct="kpu">Push-ups<code>kpu</code></button>
+                        <button class="manual-btn" data-direct="kpd">Play Dead<code>kpd</code></button>
+                        <button class="manual-btn" data-direct="kck">Check<code>kck</code></button>
+                        <button class="manual-btn" data-direct="kfiv">High Five<code>kfiv</code></button>
+                        <button class="manual-btn" data-direct="ksnf">Sniff<code>ksnf</code></button>
+                        <button class="manual-btn" data-direct="krc">Recover<code>krc</code></button>
+                        <button class="manual-btn" data-direct="d">Stop<code>d</code></button>
+                    </div>
+                    <div class="joint-panel">
+                        <div class="joint-head">
+                            <span class="joint-title">Joint angles (degrees)</span>
+                            <span class="joint-status" id="joints-status">Not read yet</span>
+                            <label class="joint-live"><input type="checkbox" id="joints-live"> Live</label>
+                            <button class="joint-read-btn" id="btn-read-joints">Read joints</button>
+                        </div>
+                        <div class="joint-row"><span class="joint-row-label">J0–J7</span><div class="joint-cell"><span>J0</span><strong id="j0">--</strong></div><div class="joint-cell"><span>J1</span><strong id="j1">--</strong></div><div class="joint-cell"><span>J2</span><strong id="j2">--</strong></div><div class="joint-cell"><span>J3</span><strong id="j3">--</strong></div><div class="joint-cell"><span>J4</span><strong id="j4">--</strong></div><div class="joint-cell"><span>J5</span><strong id="j5">--</strong></div><div class="joint-cell"><span>J6</span><strong id="j6">--</strong></div><div class="joint-cell"><span>J7</span><strong id="j7">--</strong></div></div>
+                        <div class="joint-row"><span class="joint-row-label">J8–J15</span><div class="joint-cell"><span>J8</span><strong id="j8">--</strong></div><div class="joint-cell"><span>J9</span><strong id="j9">--</strong></div><div class="joint-cell"><span>J10</span><strong id="j10">--</strong></div><div class="joint-cell"><span>J11</span><strong id="j11">--</strong></div><div class="joint-cell"><span>J12</span><strong id="j12">--</strong></div><div class="joint-cell"><span>J13</span><strong id="j13">--</strong></div><div class="joint-cell"><span>J14</span><strong id="j14">--</strong></div><div class="joint-cell"><span>J15</span><strong id="j15">--</strong></div></div>
+                        <p class="joint-note">On Bittle X, J0 is head pan and J1 is head tilt; J8–J15 are the leg shoulders and knees.</p>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="workspace-sidebar">
+                <section class="workspace-card camera-card">
+                    <div class="camera-card-header">
+                        <div>
+                            <p class="composer-title">3. Optional Camera Demo</p>
+                            <p class="composer-subtitle">Shows face tracking and intended pan/tilt movement.</p>
+                        </div>
+                        <button class="cam-btn" id="btn-start-camera">
+                            <span>📷</span> Start Camera
+                        </button>
+                    </div>
+                    <div class="camera-container">
+                        <video id="camera-feed" autoplay playsinline muted></video>
+                        <canvas id="camera-overlay"></canvas>
+                        <div class="camera-info">
+                            <div class="tracking-status" id="tracking-status">
+                                <span class="tracking-dot"></span>
+                                <span>No face detected</span>
+                            </div>
+                            <div class="fps-badge" title="Measured vision-loop rate" id="vision-fps">-- FPS</div>
+                        </div>
+                    </div>
+                    <div class="camera-controls">
+                        <div class="cam-settings">
+                            <label class="cam-setting">
+                                <span>Tracking Speed</span>
+                                <input type="range" id="tracking-speed" min="1" max="10" value="5">
+                            </label>
+                            <label class="cam-setting">
+                                <span>Pan Range</span>
+                                <input type="range" id="pan-range" min="20" max="70" value="50">
+                            </label>
+                            <label class="cam-setting">
+                                <span>Tilt Range</span>
+                                <input type="range" id="tilt-range" min="15" max="60" value="40">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="camera-note">
+                        <p>The dot marks the estimated face center. The dashed box shows the tracked region. If the robot is not connected, the gauges below still show the intended movement target.</p>
+                    </div>
+                    <div class="servo-display">
+                        <div class="servo-gauge">
+                            <span class="servo-label">Pan (L/R)</span>
+                            <div class="gauge-bar">
+                                <div class="gauge-fill" id="gauge-pan"></div>
+                                <div class="gauge-marker" id="gauge-pan-marker"></div>
+                            </div>
+                            <span class="servo-value" id="servo-pan-value">0°</span>
+                        </div>
+                        <div class="servo-gauge">
+                            <span class="servo-label">Tilt (U/D)</span>
+                            <div class="gauge-bar">
+                                <div class="gauge-fill" id="gauge-tilt"></div>
+                                <div class="gauge-marker" id="gauge-tilt-marker"></div>
+                            </div>
+                            <span class="servo-value" id="servo-tilt-value">0°</span>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="command-log workspace-card">
+                    <div class="log-header">
+                        <div>
+                            <h3>Learning Trace</h3>
+                            <p class="log-subtitle">Prompt, plan, and execution notes</p>
+                        </div>
+                        <button class="log-clear" id="btn-clear-log">Clear</button>
+                    </div>
+                    <div class="log-entries" id="log-entries">
+                        <div class="log-entry log-system">
+                            <span class="log-time">--:--</span>
+                            <span class="log-msg">System initialized. Waiting for connection...</span>
+                        </div>
+                    </div>
+                </aside>
+            </aside>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+</body>
+</html>

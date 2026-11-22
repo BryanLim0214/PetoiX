@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use PetoiX, please cite the paper below."
+title: "PetoiX"
+type: software
+repository-code: "https://github.com/BryanLim0214/PetoiX"
+authors:
+  - family-names: Kumar
+    given-names: Priyanka
+    affiliation: University of Texas Permian Basin
+  - family-names: Lim
+    given-names: Panhapiseth
+    affiliation: University of Texas Permian Basin
+  - family-names: Rosenblatt
+    given-names: Kara
+    affiliation: University of Texas Permian Basin
+preferred-citation:
+  type: conference-paper
+  title: "PetoiX: A Voice-Controlled Robotics Interface for Middle School Students AI Learning"
+  authors:
+    - family-names: Kumar
+      given-names: Priyanka
+    - family-names: Lim
+      given-names: Panhapiseth
+    - family-names: Rosenblatt
+      given-names: Kara
+  collection-title: "Proceedings of the 58th ACM Technical Symposium on Computer Science Education V.2 (SIGCSE TS 2027)"
+  conference:
+    name: "SIGCSE TS 2027"
+    city: Sacramento
+    region: CA
+    country: US
+  publisher:
+    name: ACM
+  year: 2027
+  doi: "10.1145/3857223.3863059"
